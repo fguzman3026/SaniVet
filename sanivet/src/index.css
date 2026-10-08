@@ -1,0 +1,163 @@
+@import 'tailwindcss';
+
+/* ───────────────────────────────────────────────────────────────
+   Tokens del design-system (sdd/design-system.md).
+   Esta es la única fuente de verdad de los colores de SaniVet:
+   en los componentes se usa bg-surface / text-muted / border-border,
+   nunca un hex suelto.
+   ─────────────────────────────────────────────────────────────── */
+
+/* `static` emite TODOS los tokens en :root, incluso los que todavía no usa
+   ninguna utilidad. Sin esto, Tailwind 4 los descarta: los --color-avatar-*
+   se leen desde JS (colorDeNombre) y quedarían en undefined, y los overrides
+   de dark apuntarían a variables que no existen en light. */
+@theme static {
+  /* Superficies y texto — light */
+  --color-background: #fdf8f3;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f5ede4;
+  --color-border: #e8dbcc;
+  --color-text: #2e2a26;
+  --color-muted: #7a6e63;
+
+  /* Marca */
+  --color-primary: #c96f4a;
+  --color-primary-hover: #b45e3b;
+  --color-primary-soft: #f6e4da;
+  --color-accent: #6b9080;
+  --color-accent-soft: #e2ebe6;
+
+  /* Estados de una dosis */
+  --color-success: #5e8c61;
+  --color-success-soft: #e4ede4;
+  --color-warning: #c98a1f;
+  --color-warning-soft: #fbefd6;
+  --color-destructive: #bc4e42;
+  --color-destructive-soft: #f8e2df;
+  --color-neutral: #7a6e63;
+  --color-neutral-soft: #f0e8df;
+
+  /* Fondos de avatar sin foto, elegidos por hash del nombre */
+  --color-avatar-1: #f0d9c4;
+  --color-avatar-2: #e3d5c8;
+  --color-avatar-3: #d9e2d5;
+  --color-avatar-4: #edd9d9;
+  --color-avatar-5: #dcdfea;
+  --color-avatar-6: #efe6ce;
+
+  /* Tipografía */
+  --font-display: 'Nunito', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Nunito Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --text-xs: 12px;
+  --text-xs--line-height: 16px;
+  --text-sm: 14px;
+  --text-sm--line-height: 20px;
+  --text-base: 16px;
+  --text-base--line-height: 24px;
+  --text-lg: 18px;
+  --text-lg--line-height: 26px;
+  --text-xl: 22px;
+  --text-xl--line-height: 30px;
+  --text-2xl: 28px;
+  --text-2xl--line-height: 36px;
+  --text-3xl: 36px;
+  --text-3xl--line-height: 44px;
+
+  /* Forma */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Sombras tintadas en marrón, nunca negras */
+  --shadow-sm: 0 1px 2px rgb(80 60 45 / 0.06);
+  --shadow-md: 0 4px 12px rgb(80 60 45 / 0.08);
+  --shadow-lg: 0 12px 32px rgb(80 60 45 / 0.12);
+}
+
+/* Dark: la misma calidez en marrones profundos, no en grises azulados.
+   Se sobreescriben las variables que @theme ya emitió en :root — ningún
+   color se define únicamente acá. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --color-background: #211d1a;
+    --color-surface: #2a2522;
+    --color-surface-muted: #332c28;
+    --color-border: #433a34;
+    --color-text: #f2eae1;
+    --color-muted: #a8998c;
+
+    --color-primary: #e39170;
+    --color-primary-hover: #eda183;
+    --color-primary-soft: #3d2a21;
+    --color-accent: #8fb3a3;
+    --color-accent-soft: #26332d;
+
+    --color-success: #7fae82;
+    --color-success-soft: #2c3a2e;
+    --color-warning: #e8b85c;
+    --color-warning-soft: #3d3220;
+    --color-destructive: #e07a6e;
+    --color-destructive-soft: #3e2724;
+    --color-neutral: #a8998c;
+    --color-neutral-soft: #332c28;
+  }
+}
+
+/* Mismo bloque para el toggle manual, si más adelante se agrega uno. */
+:root[data-theme='dark'] {
+  --color-background: #211d1a;
+  --color-surface: #2a2522;
+  --color-surface-muted: #332c28;
+  --color-border: #433a34;
+  --color-text: #f2eae1;
+  --color-muted: #a8998c;
+
+  --color-primary: #e39170;
+  --color-primary-hover: #eda183;
+  --color-primary-soft: #3d2a21;
+  --color-accent: #8fb3a3;
+  --color-accent-soft: #26332d;
+
+  --color-success: #7fae82;
+  --color-success-soft: #2c3a2e;
+  --color-warning: #e8b85c;
+  --color-warning-soft: #3d3220;
+  --color-destructive: #e07a6e;
+  --color-destructive-soft: #3e2724;
+  --color-neutral: #a8998c;
+  --color-neutral-soft: #332c28;
+}
+
+@layer base {
+  :root {
+    /* Hace que los controles nativos — sobre todo <input type="date"> —
+       sigan el tema en lugar de quedar blancos sobre fondo oscuro. */
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
+
+  /* Las fechas y los números no deben bailar al cambiar de valor. */
+  time,
+  [data-numerico] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
