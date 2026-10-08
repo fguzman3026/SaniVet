@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="El plan sanitario de tus mascotas, calculado solo." />
+    <meta name="description" content="El plan sanitario de tus mascotas, calculado automaticamente." />
     <meta name="theme-color" content="#FDF8F3" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#211D1A" media="(prefers-color-scheme: dark)" />
 
@@ -16,6 +16,15 @@
     />
 
     <title>SaniVet</title>
+
+    <script>
+      // Aplica el tema guardado antes del primer paint, para que no haya
+      // un parpadeo si la elección manual difiere de la preferencia del sistema.
+      (function () {
+        var tema = localStorage.getItem('sanivet:tema')
+        if (tema === 'light' || tema === 'dark') document.documentElement.setAttribute('data-theme', tema)
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

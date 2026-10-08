@@ -183,7 +183,7 @@ Depende de la Fase 6. Cierra el circuito: la pantalla que responde "¿a quién l
 
 Depende de todo lo anterior.
 
-- [x] Pasada responsive a 375px, 768px y escritorio — ver nota abajo, no se pudo verificar visualmente a 375/768px
+- [x] Pasada responsive a 375px, 768px y escritorio — verificada visualmente (ver nota abajo sobre el método usado)
 - [x] Modo oscuro verificado en las 4 pantallas
 - [x] Transiciones y feedback de botones según el modelo de interacción del spec técnico
 - [x] Accesibilidad mínima: labels asociados, foco visible, navegación por teclado en los modales, estado nunca comunicado solo por color
@@ -201,11 +201,12 @@ Depende de todo lo anterior.
 - **`console.log`**: barrido con grep sobre todo `src/` — cero coincidencias de `console.*`.
 - **Build de producción**: `npm run build` (bundle de 323KB / 100KB gzip) y `npm run preview` contra el build real (no el servidor de dev) — alta completa de una mascota, recarga de página con los datos persistidos, agenda y "Mis mascotas" calculados correctamente, cero errores de consola.
 
+**Responsive — cómo se verificó de verdad:** la herramienta de redimensionar ventana del navegador automatizado no tuvo efecto en esta sesión (el viewport se mantuvo en 1536px pese a pedir 375×700 y 400×800 — la ventana está gestionada/maximizada por el entorno). En vez de conformarse con la auditoría de código, se armó un iframe de tamaño fijo (375×812 y luego 768×900) apuntando a `localhost:5173` — un iframe tiene su propio viewport de verdad para los media queries de CSS, así que esto sí dispara los breakpoints reales de Tailwind, a diferencia de recortar un screenshot. Con eso se vieron, a 375px: la agenda con avatar/dosis arriba y badge/botón envueltos en una segunda línea (`flex-wrap`), "Mis mascotas" en una columna, el formulario completo (el selector de especie no se achica mal), la ficha con el encabezado y la línea de tiempo sin desbordes, y el modal pegado abajo como hoja. A 768px: "Mis mascotas" ya en dos columnas, las filas de la agenda vuelven a entrar en una sola línea, y el modal pasa a centrado con radios en las cuatro esquinas (confirma que `items-end sm:items-center` cambia justo en el breakpoint `sm`). Cero errores de consola en ningún tamaño.
+
 **Lo que no se pudo verificar y por qué:**
 
-- **Responsive real a 375px/768px**: la herramienta de redimensionar ventana del navegador automatizado no tuvo efecto en esta sesión (el viewport se mantuvo en 1536px pese a pedir 375×700 y 400×800 — probablemente la ventana está gestionada/maximizada por el entorno y no se puede redimensionar por este medio). Se hizo en cambio una auditoría de código: sin anchos fijos en píxeles (`grep w-\[` no encontró nada), `flex-wrap` en todas las filas que podrían desbordar (agenda, tarjeta destacada del plan, línea de tiempo), grilla `grid-cols-1 sm:grid-cols-2` en "Mis mascotas", `Modal` con hoja pegada abajo en mobile (`items-end sm:items-center`) y padding de contenedor responsive (`px-4 sm:px-6` en `Pantalla.tsx`, ya de la Fase 1). Razonablemente confiable, pero sigue siendo pendiente la verificación visual real — vale la pena hacerla a mano (DevTools → responsive mode) antes de dar la v1 por cerrada.
 - **Chrome/Safari de celular real**: esta sesión no tiene acceso a un dispositivo móvil real ni a Safari (herramienta de navegador limitada a Chrome de escritorio). Los dos puntos frágiles que señala el spec (`<input type="date">` y la cámara vía `capture="environment"`) no se probaron en el hardware real.
-- **Deploy**: no se inició. El directorio todavía no es un repositorio git, y desplegar a Vercel/Netlify implica crear o conectar una cuenta externa — una acción que corresponde decidir al usuario, no autónoma. Pendiente de alinear con la usuaria antes de tocar nada de esto.
+- **Deploy**: según lo que decidió la usuaria, se inicializó el repositorio git local (a nivel de todo el proyecto — `sdd/` + `sanivet/` + `SKILL.md` — no solo `sanivet/`) con un primer commit limpio (61 archivos, `node_modules`/`dist` correctamente afuera). Falta: crear el repo remoto en GitHub, conectarlo a Vercel o Netlify indicando **Root Directory: `sanivet`** (el `package.json` del proyecto Vite vive ahí, no en la raíz del repo), y verificar carga + persistencia + recarga en el dominio público. Eso queda en manos de la usuaria.
 
 ---
 

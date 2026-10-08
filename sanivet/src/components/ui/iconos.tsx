@@ -94,6 +94,35 @@ export function IconoPerro(props: IconoProps) {
   )
 }
 
+export function IconoHuella(props: IconoProps) {
+  return (
+    <Svg {...props}>
+      <ellipse cx="12" cy="16.5" rx="4.3" ry="3.6" fill="currentColor" stroke="none" />
+      <ellipse cx="6.3" cy="10.2" rx="2" ry="2.5" transform="rotate(-20 6.3 10.2)" fill="currentColor" stroke="none" />
+      <ellipse cx="17.7" cy="10.2" rx="2" ry="2.5" transform="rotate(20 17.7 10.2)" fill="currentColor" stroke="none" />
+      <ellipse cx="8.8" cy="5.8" rx="1.7" ry="2.2" transform="rotate(-12 8.8 5.8)" fill="currentColor" stroke="none" />
+      <ellipse cx="15.2" cy="5.8" rx="1.7" ry="2.2" transform="rotate(12 15.2 5.8)" fill="currentColor" stroke="none" />
+    </Svg>
+  )
+}
+
+export function IconoSol(props: IconoProps) {
+  return (
+    <Svg {...props}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+    </Svg>
+  )
+}
+
+export function IconoLuna(props: IconoProps) {
+  return (
+    <Svg {...props}>
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5Z" />
+    </Svg>
+  )
+}
+
 export function IconoGato(props: IconoProps) {
   return (
     <Svg {...props}>

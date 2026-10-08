@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import FilaAgenda from '@/components/FilaAgenda'
 import TarjetaMascota from '@/components/TarjetaMascota'
-import { IconoCheck, IconoPerro, IconoReloj } from '@/components/ui/iconos'
+import { IconoCheck, IconoHuella, IconoPerro, IconoReloj } from '@/components/ui/iconos'
 import { derivarCronograma, proximaPendiente } from '@/domain/cronograma'
 import type { PlanId } from '@/domain/tipos'
 import { formatearFecha } from '@/lib/fechas'
@@ -36,8 +36,8 @@ export default function Inicio() {
   }
 
   return (
-    <Pantalla titulo="SaniVet">
-      <p className="text-muted">El plan sanitario de tus mascotas, calculado solo.</p>
+    <Pantalla titulo="SaniVet" icono={<IconoHuella className="size-8 text-primary" />}>
+      <p className="text-muted">El plan sanitario de tus mascotas, calculado automáticamente.</p>
       <Link to="/mascotas/nueva" className={`mt-6 ${CLASE_BOTON_AGREGAR}`}>
         Agregar mascota
       </Link>
